@@ -26,6 +26,9 @@ var testCommands = {
             .verify.containsText('@noSearchResult', 'There were no results matching the query.')
         return this
 
+    },
+    accountLogin: function(data){
+        //more code
     }
 }
 
@@ -40,5 +43,7 @@ module.exports = {
         searchResult: '#firstHeading',
         noSearchResult: '.mw-search-nonefound',
         searchInputButton: '[name="go"]'
+        //ACCOUNT LOGIN
+        
     }
 }

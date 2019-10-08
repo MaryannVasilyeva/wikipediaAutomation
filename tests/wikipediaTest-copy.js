@@ -11,11 +11,13 @@ module.exports = {
 
   },
   'Testing the account login': browser => {
+    // wikipediaObject
+    //     .accountLogin(data)
     wikipediaObject
-    .click('#pt-login')
-    .setValue('[class="loginText mw-ui-input"]','Ewilhelm-test')
-    .setValue('[class="loginPassword mw-ui-input"]', 'testme123')
-    .click('button[name="wploginattempt"]')
+      .click('#pt-login')
+      .setValue('[class="loginText mw-ui-input"]','Ewilhelm-test')
+      .setValue('[class="loginPassword mw-ui-input"]', 'testme123')
+      .click('button[name="wploginattempt"]')
     
   }
 }
