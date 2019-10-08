@@ -1,4 +1,9 @@
 var wikipediaObject = {}
+var data = require('../testAssets/wikipediaData')
+var myData = {
+    login: 'Ewilhelm1125',
+    password: 'testme123'
+}
 module.exports = {
   beforeEach: browser => {
       wikipediaObject = browser.page.wikipedia()
@@ -11,13 +16,8 @@ module.exports = {
 
   },
   'Testing the account login': browser => {
-    // wikipediaObject
-    //     .accountLogin(data)
     wikipediaObject
-      .click('#pt-login')
-      .setValue('[class="loginText mw-ui-input"]','Ewilhelm-test')
-      .setValue('[class="loginPassword mw-ui-input"]', 'testme123')
-      .click('button[name="wploginattempt"]')
-    
+        .accountLogin(myData)
+
   }
 }
