@@ -10,11 +10,6 @@ module.exports = {
   'Testing the navbar': browser => {
 
   },
-  'Testing the search': browser => {
-     wikipediaObject
-        .searchInput()
-
-  },
   'Testing the account login': browser => {
     wikipediaObject
     .click('#pt-login')
