@@ -7,14 +7,13 @@ module.exports = {
       wikipediaObject.navigate()
   },  
   'Testing the navbar': browser => {
-
+    wikipediaObject
+        .navBar(data)
   },
   'Testing the search': browser => {
     wikipediaObject 
-    //testing for valid and invalid data...
         .searchInput(data)
         .searchInvalidInput(data)
-
   },
   'Testing the account login': browser => {
 

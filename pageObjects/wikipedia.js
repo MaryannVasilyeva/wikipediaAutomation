@@ -1,4 +1,26 @@
 var testCommands = {
+    // TESTING THE NAVBAR BUTTONS LINKING
+    navBar: function(data){
+        this
+            .waitForElementVisible('@pageContent')
+            .click('@contentsLink')
+            .verify.containsText('@searchResult', 'Portal:Contents')
+        this
+            .click('@featuredContentLink')
+            .verify.containsText('@searchResult', 'Portal:Featured content')
+        this
+            .click('@currentEventsLink')
+            .verify.containsText('@searchResult', 'Portal:Current events')
+        this
+            .click('@donateLink')
+            .verify.urlContains('https://donate.wikimedia.org')
+            .api.back()
+        this
+            .click('@storeLink')
+            .verify.urlContains('https://store.wikimedia.org')
+            .api.back()
+        return this
+    },
     // TESTING FOR A VALID INPUT IN THE SEARCH
     searchInput: function(data) {
         this
@@ -38,12 +60,24 @@ module.exports = {
     elements: {
         //PAGE LAYOUT SELECTOR
         pageContent: '#content',
+        //NAVBAR SELECTORS
+            //***CONTENTS
+        contentsLink: 'a[title="Guides to browsing Wikipedia"]',
+            //***FEATURED CONTENTS
+        featuredContentLink: 'a[title="Featured content – the best of Wikipedia"]',
+            //***CURRENT EVENTS
+        currentEventsLink: 'a[title="Find background information on current events"]',
+            //***DONATE TO WIKIPEDIA
+        donateLink: 'a[title="Support us"]',
+            //***WIKIPEDIA STORE
+        storeLink: 'a[title="Visit the Wikipedia store"]',
+
         //SEARCH SELECTORS
         searchInput: '[name="search"]',
         searchResult: '#firstHeading',
         noSearchResult: '.mw-search-nonefound',
         searchInputButton: '[name="go"]'
         //ACCOUNT LOGIN
-        
+
     }
 }
