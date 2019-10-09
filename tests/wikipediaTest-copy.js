@@ -1,12 +1,9 @@
 var wikipediaObject = {}
-var data = require('../testAssets/wikipediaData')
-var myData = {
-    login: 'Ewilhelm1125',
-    password: 'testme123'
-}
+require('../testAssets/wikipediaData')
+
 module.exports = {
   beforeEach: browser => {
-      wikipediaObject = browser.page.wikipedia()
+      wikipediaObject = browser.page.wikipediaEW()
       wikipediaObject.navigate()
   },  
   after: browser => {
@@ -17,7 +14,8 @@ module.exports = {
   },
   'Testing the account login': browser => {
     wikipediaObject
-        .accountLogin(myData)
+    //moved the mock data into the testAssets/wikipediaData.js
+        .accountLogin(accountData)
 
   }
 }

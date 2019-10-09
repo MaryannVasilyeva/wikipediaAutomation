@@ -50,13 +50,13 @@ var testCommands = {
 
     },
     accountLogin: function(data){
-        //more code
         this
         //TESTING LOGIN?
-        .click('@navLoginButton')
-        .setValue('@accountLogin',(data.login))
-        .setValue('@passwordLogin', (data.password))
-        .click('@loginButton')
+            .click('@navLoginButton')
+            //calling the .login and .password to the testAssets/wikipediaData.js
+            .setValue('@accountLogin',data[0].login)
+            .setValue('@passwordLogin', data[0].password)
+            .click('@loginButton')
         return this
     }
 }
