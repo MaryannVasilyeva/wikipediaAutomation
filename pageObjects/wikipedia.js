@@ -1,38 +1,48 @@
 var testCommands = {
     // TESTING THE NAVBAR BUTTONS LINKING
     navBar: function(data){
-        this
-            .waitForElementVisible('@pageContent')
-            .click('@contentsLink')
-            .verify.containsText('@searchResult', 'Portal:Contents')
-        this
-            .click('@featuredContentLink')
-            .verify.containsText('@searchResult', 'Portal:Featured content')
-        this
-            .click('@currentEventsLink')
-            .verify.containsText('@searchResult', 'Portal:Current events')
-        this
-            .click('@donateLink')
-            .verify.urlContains('https://donate.wikimedia.org')
-            .api.back()
-        this
-            .click('@storeLink')
-            .verify.urlContains('https://store.wikimedia.org')
-            .api.back()
+        var self = this;
+        var number
+            for (number = 1; number < 7; number +=1) {
+                self.api.useXpath()
+                switch (number){
+                    case 2:
+                        self
+                            .click(`(//div[@class="body"]//li//a)[${number}]`)
+                            .verify.containsText('@searchResult', data[0].contents)
+                        break;
+                    case 3:
+                        self
+                            .click(`(//div[@class="body"]//li)[${number}]`)
+                            .verify.containsText('@searchResult', data[0].featuredContents)
+                        break;
+                    case 4:
+                        self
+                            .click(`(//div[@class="body"]//li)[${number}]`)
+                            .verify.containsText('@searchResult', data[0].currentEvents)
+                        break;
+                    case 6:
+                        self
+                            .click(`(//div[@class="body"]//li)[${number}]`)
+                            .verify.urlContains(data[0].donateUrl)
+                            .api.back()
+                        break;
+                    case 7:
+                        self
+                            .click(`(//div[@class="body"]//li)[${number}]`)
+                            .verify.urlContains(data[0].storeUrl)
+                            .api.back()
+                        break;
+                    default:
+                }
+            }
         return this
     },
     // TESTING FOR A VALID INPUT IN THE SEARCH
     searchInput: function(data) {
         this
-        // testing with the ENTER key
-            .waitForElementVisible('@pageContent')
-            .setValue('@searchInput', [data.search, this.api.Keys.ENTER])
-            .waitForElementVisible('@searchResult')
-            .verify.containsText('@searchResult', 'DevMountain')
-            .api.back()
-        this
         // testing the search button
-            .setValue('@searchInput', (data.search))
+            .setValue('@searchInput', (data[0].search))
             .click('@searchInputButton')
             .waitForElementVisible('@searchResult')
             .verify.containsText('@searchResult', 'DevMountain')
@@ -43,7 +53,7 @@ var testCommands = {
     searchInvalidInput: function(data){
         this
             .waitForElementVisible('@pageContent')
-            .setValue('@searchInput', [data.invalidSearch, this.api.Keys.ENTER])
+            .setValue('@searchInput', [data[0].invalidSearch, this.api.Keys.ENTER])
             .waitForElementVisible('@searchResult')
             .verify.containsText('@noSearchResult', 'There were no results matching the query.')
         return this

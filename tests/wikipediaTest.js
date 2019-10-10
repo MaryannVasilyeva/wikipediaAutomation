@@ -2,20 +2,20 @@ var wikipediaObject = {}
 var data = require('../testAssets/wikipediaData')
 
 module.exports = {
-  before: browser => {
+  beforeEach: browser => {
       wikipediaObject = browser.page.wikipedia()
       wikipediaObject.navigate()
   },  
+  after: browser => {
+      wikipediaObject.end()
+  },
   'Testing the navbar': browser => {
-    wikipediaObject
-        .navBar(data)
+      wikipediaObject
+        .navBar(navbarData)
   },
   'Testing the search': browser => {
     wikipediaObject 
-        .searchInput(data)
-        .searchInvalidInput(data)
+        .searchInput(searchData)
+        .searchInvalidInput(searchData)
   },
-  'Testing the account login': browser => {
-
-  }
 }
