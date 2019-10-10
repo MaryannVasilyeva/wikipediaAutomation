@@ -18,4 +18,9 @@ module.exports = {
         .searchInput(searchData)
         .searchInvalidInput(searchData)
   },
+  'Testing the account login': browser => {
+    wikipediaObject
+        .accountLogin(accountData)
+
+  }
 }

@@ -60,7 +60,14 @@ var testCommands = {
 
     },
     accountLogin: function(data){
-        //more code
+        this
+        //TESTING LOGIN?
+            .click('@navLoginButton')
+            //calling the .login and .password to the testAssets/wikipediaData.js
+            .setValue('@accountLogin',data[0].login)
+            .setValue('@passwordLogin', data[0].password)
+            .click('@loginButton')
+        return this
     }
 }
 
@@ -86,8 +93,12 @@ module.exports = {
         searchInput: '[name="search"]',
         searchResult: '#firstHeading',
         noSearchResult: '.mw-search-nonefound',
-        searchInputButton: '[name="go"]'
+        searchInputButton: '[name="go"]',
         //ACCOUNT LOGIN
+        accountLogin: '[class="loginText mw-ui-input"]',
+        passwordLogin: '[class="loginPassword mw-ui-input"]',
+        loginButton: '[name="wploginattempt"]',
+        navLoginButton: '#pt-login'
 
     }
 }
