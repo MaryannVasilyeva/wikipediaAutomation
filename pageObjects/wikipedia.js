@@ -1,47 +1,64 @@
 var testCommands = {
     // TESTING THE NAVBAR BUTTONS LINKING
-    navBar: function(data){
+    navBar: function (data) {
         var self = this;
         var number
-            for (number = 1; number < 7; number +=1) {
-                self.api.useXpath()
-                switch (number){
-                    case 2:
-                        self
-                            .click(`(//div[@class="body"]//li//a)[${number}]`)
-                            .verify.containsText('@searchResult', data[0].contents)
-                        break;
-                    case 3:
-                        self
-                            .click(`(//div[@class="body"]//li)[${number}]`)
-                            .verify.containsText('@searchResult', data[0].featuredContents)
-                        break;
-                    case 4:
-                        self
-                            .click(`(//div[@class="body"]//li)[${number}]`)
-                            .verify.containsText('@searchResult', data[0].currentEvents)
-                        break;
-                    case 6:
-                        self
-                            .click(`(//div[@class="body"]//li)[${number}]`)
-                            .verify.urlContains(data[0].donateUrl)
-                            .api.back()
-                        break;
-                    case 7:
-                        self
-                            .click(`(//div[@class="body"]//li)[${number}]`)
-                            .verify.urlContains(data[0].storeUrl)
-                            .api.back()
-                        break;
-                    default:
-                }
+        self.api.useXpath()
+        for (number = 1; number < 8; number += 1) {
+            switch (number) {
+                case 2:
+                    self
+                        .click(`(//div[@class="body"]//li//a)[${number}]`)
+                        .verify.containsText('@searchResult', data[0].contents)
+                    break;
+                case 3:
+                    self
+                        .click(`(//div[@class="body"]//li//a)[${number}]`)
+                        .verify.containsText('@searchResult', data[0].featuredContents)
+                    break;
+                case 4:
+                    self
+                        .click(`(//div[@class="body"]//li//a)[${number}]`)
+                        .verify.containsText('@searchResult', data[0].currentEvents)
+                    break;
+                case 6:
+                    self.click(`(//div[@class="body"]//li//a)[${number}]`, function (result) {
+                        self.api.windowHandles(function (result) {
+                            self.verify.urlContains(data[0].donateUrl)
+                            self.api.openNewWindow()
+                            self.api.windowHandles(function (result) {
+                                self.api.switchWindow(result.value[0])
+                                self.api.closeWindow()
+                                self.api.switchWindow(result.value[1])
+                                self.api.url('https://en.wikipedia.org/wiki/Main_Page')
+                            })
+                        })
+                    })
+                    break;
+                case 7:
+                    self.click(`(//div[@class="body"]//li//a)[${number}]`, function (result) {
+                        self.api.windowHandles(function (result) {
+                            self.verify.urlContains(data[0].storeUrl)
+                            self.api.openNewWindow()
+                            self.api.windowHandles(function (result) {
+                                self.api.switchWindow(result.value[0])
+                                self.api.closeWindow()
+                                self.api.switchWindow(result.value[1])
+                                self.api.url('https://en.wikipedia.org/wiki/Main_Page')
+                            })
+                        })
+                    })
+                    break;
+                default:
             }
+        }
         return this
     },
+
     // TESTING FOR A VALID INPUT IN THE SEARCH
-    searchInput: function(data) {
+    searchInput: function (data) {
         this
-        // testing the search button
+            // testing the search button
             .setValue('@searchInput', (data[0].search))
             .click('@searchInputButton')
             .waitForElementVisible('@searchResult')
@@ -50,7 +67,7 @@ var testCommands = {
         return this
     },
     // TESTING FOR AN INVALID INPUT IN THE SEARCH
-    searchInvalidInput: function(data){
+    searchInvalidInput: function (data) {
         this
             .waitForElementVisible('@pageContent')
             .setValue('@searchInput', [data[0].invalidSearch, this.api.Keys.ENTER])
@@ -59,12 +76,12 @@ var testCommands = {
         return this
 
     },
-    accountLogin: function(data){
+    accountLogin: function (data) {
         this
-        //TESTING LOGIN?
+            //TESTING LOGIN?
             .click('@navLoginButton')
             //calling the .login and .password to the testAssets/wikipediaData.js
-            .setValue('@accountLogin',data[0].login)
+            .setValue('@accountLogin', data[0].login)
             .setValue('@passwordLogin', data[0].password)
             .click('@loginButton')
         return this
@@ -78,15 +95,15 @@ module.exports = {
         //PAGE LAYOUT SELECTOR
         pageContent: '#content',
         //NAVBAR SELECTORS
-            //***CONTENTS
+        //***CONTENTS
         contentsLink: 'a[title="Guides to browsing Wikipedia"]',
-            //***FEATURED CONTENTS
+        //***FEATURED CONTENTS
         featuredContentLink: 'a[title="Featured content – the best of Wikipedia"]',
-            //***CURRENT EVENTS
+        //***CURRENT EVENTS
         currentEventsLink: 'a[title="Find background information on current events"]',
-            //***DONATE TO WIKIPEDIA
+        //***DONATE TO WIKIPEDIA
         donateLink: 'a[title="Support us"]',
-            //***WIKIPEDIA STORE
+        //***WIKIPEDIA STORE
         storeLink: 'a[title="Visit the Wikipedia store"]',
 
         //SEARCH SELECTORS
